@@ -1,4 +1,6 @@
 from pythonosc.udp_client import SimpleUDPClient
+from pythonosc.osc_message_builder import OscMessageBuilder
+
 
 
 # http://facetracknoir.sourceforge.net/Trackers/OSC.htm
@@ -9,7 +11,7 @@ class OSCServer:
 
     def send_update(self, position, rotation):
         # /gyrosc/gyro {pitch, roll, yaw}
-        client.send_message("/gyrosc/gyro", rotation.astype(float))
+        self.client.send_message("/gyrosc/gyro", rotation / 100)
 
         # /gyrosc/xyz {x, y, z}
-        client.send_message("/gyrosc/xyz", position.astype(float))
+        self.client.send_message("/gyrosc/xyz", position)

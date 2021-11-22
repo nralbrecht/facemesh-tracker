@@ -21,7 +21,7 @@ if args.client == "udp":
     from client.udp import UDPServer
     ClientImplementation = UDPServer
 elif args.client == "osc":
-    from server.osc import OSCServer
+    from client.osc import OSCServer
     ClientImplementation = OSCServer
 
 server = ClientImplementation(args.host, args.port)
