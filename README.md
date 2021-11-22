@@ -14,7 +14,7 @@ You can either use `git` to clone the repository or download the *FaceMesh Track
 Open a terminal in the root directory of the project and run the following commands.
 ```
 pip install -r requirements.txt
-python cmd.py --host localhost --port 4242 --preview -s opentrack_udp
+python cmd.py --host localhost --port 4242 --video --client udp
 ```
 
 ### 4. Setup Tracking Software
@@ -28,16 +28,16 @@ The data is sent using a the UDP network protocol. Choose the `UDP over Network`
 ## Usage
 ```
 # python cmd.py --help
-usage: cmd.py [-h] [--host HOST] [-p PORT] [--preview] [-v] -s {opentrack_udp,tracknoir_udp}
+usage: cmd.py [-h] [--host HOST] [-p PORT] [-v] [--verbose] -c {udp,osc}
 
 optional arguments:
   -h, --help            show this help message and exit
   --host HOST           udp server hostname
   -p PORT, --port PORT  udp server port
-  --preview             show a preview of the tracking points
-  -v, --verbose         enable verbose ouput
-  -s {opentrack_udp,tracknoir_udp}, --server {opentrack_udp,tracknoir_udp}
-                        choose server implementation
+  -v, --video           show a live video preview of the tracking results
+  --verbose             enable verbose ouput
+  -c {udp,osc}, --client {udp,osc}
+                        choose client implementation
 ```
 
 ## PipEnv
@@ -46,5 +46,5 @@ You can optionally also use PipEnv to manage a virtual environment and all packa
 ```
 pip install --user pipenv
 pipenv install
-pipenv run python cmd.py -s opentrack_udp
+pipenv run python cmd.py --client udp
 ```

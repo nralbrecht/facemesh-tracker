@@ -43,12 +43,11 @@ class FaceMeshTracker:
             if results.multi_face_landmarks:
                 selected_face = results.multi_face_landmarks[0]
                 face_features, orientation, rotation = self.process_face(selected_face)
-                pivot = -face_features["nose"] * 20
-                pivot[2] *= 10
+                pivot = self.get_face_pivot(face_features)
 
                 self.server.send_update(pivot, rotation)
 
-                if self.preview and self.preview.show_image(image, selected_face, face_features, orientation, rotation):
+                if self.preview and self.preview.show_image(image, selected_face, face_features, orientation, rotation, pivot):
                     break
             else:
                 if self.preview and self.preview.show_image(image):
@@ -226,3 +225,10 @@ class FaceMeshTracker:
 
     def normalize(self, vector):
         return vector / np.linalg.norm(vector)
+
+    def get_face_pivot(self, features):
+        return np.array([
+            (features["nose"][0] - 0.5) * -50,
+            (features["nose"][1] - 0.5) * -50,
+            (features["nose"][2] + 0.035) * 500
+        ])

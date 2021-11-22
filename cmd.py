@@ -5,29 +5,29 @@ parser.add_argument("--host", type=str, default="localhost",
     help="udp server hostname")
 parser.add_argument("-p", "--port", type=int, default=4242,
     help="udp server port")
-parser.add_argument("--preview", action="store_true",
-    help="show a preview of the tracking points")
-parser.add_argument("-v", "--verbose", action="store_true",
+parser.add_argument("-v", "--video", action="store_true",
+    help="show a live video preview of the tracking results")
+parser.add_argument("--verbose", action="store_true",
     help="enable verbose ouput")
-parser.add_argument("-s", "--server", choices=["opentrack_udp", "tracknoir_udp"], required=True,
-    help="choose server implementation")
+parser.add_argument("-c", "--client", choices=["udp", "osc"], required=True,
+    help="choose client implementation")
 
 args = parser.parse_args()
 
 from facemesh_tracker import FaceMeshTracker
 from facemesh_preview import FaceMeshPreview
 
-if args.server == "opentrack_udp":
-    from server.opentrack_udp import OpenTrackUDPServer
-    Server = OpenTrackUDPServer
-elif args.server == "tracknoir_udp":
-    from server.tracknoir_udp import TrackNoIRUDPServer
-    Server = TrackNoIRUDPServer
+if args.client == "udp":
+    from client.udp import UDPServer
+    ClientImplementation = UDPServer
+elif args.client == "osc":
+    from server.osc import OSCServer
+    ClientImplementation = OSCServer
 
-server = Server(args.host, args.port)
-print("INFO: Sending tracking data to {}:{}".format(args.host, args.port))
+server = ClientImplementation(args.host, args.port)
+print("INFO: Sending tracking data to {}:{} via {}".format(args.host, args.port, args.client))
 
-if args.preview:
+if args.video:
     preview = FaceMeshPreview()
 else:
     preview = None

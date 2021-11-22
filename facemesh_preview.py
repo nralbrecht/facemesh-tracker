@@ -13,7 +13,7 @@ class FaceMeshPreview:
         self.rotation_drawing_spec = mp_drawing.DrawingSpec(color=mp_drawing.RED_COLOR)
         self.mesh_drawing_spec = mp_drawing_styles.get_default_face_mesh_tesselation_style()
 
-    def show_image(self, base_image, selected_face = None, face_features = None, orientation=None, rotation=None):
+    def show_image(self, base_image, selected_face = None, face_features = None, orientation=None, rotation=None, pivot=None):
         # Draw the face mesh annotations on the image.
         base_image.flags.writeable = True
         base_image = cv2.cvtColor(base_image, cv2.COLOR_RGB2BGR)
@@ -61,11 +61,23 @@ class FaceMeshPreview:
 
             if rotation is not None:
                 # write directions as text
-                for i, rot in enumerate(zip("xyz", rotation)):
+                for i, rot in enumerate(zip(["yaw", "pitch", "roll"], rotation)):
                     cv2.putText(
                         base_image,
                         "{}: {}".format(*rot),
                         (1, 10+10*i), #position at which writing has to start
+                        cv2.FONT_HERSHEY_SIMPLEX, #font family
+                        0.4, #font size
+                        (209, 80, 0, 255), #font color
+                        1) #font stroke
+
+            if pivot is not None:
+                # write directions as text
+                for i, rot in enumerate(zip("xyz", pivot)):
+                    cv2.putText(
+                        base_image,
+                        "{}: {}".format(*rot),
+                        (1, 10+10*3+10+10*i), #position at which writing has to start
                         cv2.FONT_HERSHEY_SIMPLEX, #font family
                         0.4, #font size
                         (209, 80, 0, 255), #font color

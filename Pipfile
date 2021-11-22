@@ -8,6 +8,7 @@ mediapipe = "*"
 opencv-contrib-python = "*"
 opencv-python = "==4.5.3.56"
 scipy = "*"
+python-osc = "*"
 
 [dev-packages]
 
