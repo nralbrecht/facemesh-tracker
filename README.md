@@ -25,10 +25,13 @@ The *FaceMesh Tracker* is ment as a headtracking data provider that can be used 
 
 The data is sent using a the UDP network protocol. Choose the `UDP over Network` input when setting up the tracker. Make shure that the port is `4242` or as otherwise configured when starting the *FaceMesh Tracker*.
 
+### 5. Setup Ambisonics rotation plugins
+The IEM and SPARTA audio plugin suites support Ambisonics field rotation, using a simple /ypr OSC message. The default OSC port is 9000.
+
 ## Usage
 ```
 # python cmd.py --help
-usage: cmd.py [-h] [--host HOST] [-p PORT] [-v] [--verbose] -c {udp,osc}
+usage: cmd.py [-h] [--host HOST] [-p PORT] [-v] [--verbose] -c {udp,osc,ypr}
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -36,7 +39,7 @@ optional arguments:
   -p PORT, --port PORT  udp server port
   -v, --video           show a live video preview of the tracking results
   --verbose             enable verbose ouput
-  -c {udp,osc}, --client {udp,osc}
+  -c {udp,osc}, --client {udp,osc,ypr}
                         choose client implementation
 ```
 
